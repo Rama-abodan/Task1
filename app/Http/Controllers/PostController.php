@@ -64,18 +64,26 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $vali = $request->validate([
+        /* $vali = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'image' => 'sometimes|image|max:2048'
-        ]);
+        ]); */
         if ($request->hasFile('image')) {
-            $imageName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('images/posts'), $imageName);
-            $vali['image'] = $imageName;
+            $imageName = $request->file("image")->getClientOriginalName() . "-" . time() . $request->file("image")->getClientOriginalExtension();
+            $request->file("image")->move(public_path("/images/posts"), $imageName);
+            /* $vali['image'] = $imageName; */
         }
-        $post->update($vali);
-        return redirect()->route('posts.show', $post->id)->with('success', 'Post updated successfully');
+        else{
+            $imageName = $post->image;
+        }
+        /* $post->update($vali); */
+        $post->update([
+        "title" => $request->title,
+        "description" => $request->description,
+        "image" =>$imageName]);
+        /* return redirect()->route('posts.show', $post->id)->with('success', 'Post updated successfully'); */
+        return redirect()->route('posts.index');
     }
 
     /**

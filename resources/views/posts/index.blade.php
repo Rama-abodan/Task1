@@ -7,7 +7,6 @@
         <a href="{{ route('posts.create') }}"><input type="button" value="add new post" class="btn btn-success"></a>
         <div class="container">
             @forelse ($posts as $post)
-                <a href="{{ route('posts.show', $post->id) }}" class="acl">
                     <div class="row row-cols-1 row-cols-md-2 g-4">
                         <div class="col">
                             <div class="card">
@@ -16,6 +15,7 @@
                                 <div class="card-body">
                                     <h3 class="card-title">{{ $post->title }}</h3>
                                     <p class="card-text">{{ $post->description }}</p>
+                                    <a href="{{ route('posts.show', $post->id) }}" class="acl">read more than</a>
                                     <div class="d-flex justify-content-between">
                                         <form action="{{ route('posts.destroy', $post->id) }}" method="POST"
                                             style="display:inline;">

@@ -20,15 +20,12 @@
                 <textarea name="description" class="form-control" placeholder="post description" required>{{ $post->description }}</textarea>
             </div>
 
-            <div>
-                <label for="image">Image:</label>
-                <input type="file" name="image">
-                @if ($post->image)
-                    <div>
-                        <img src="{{ asset('images/posts/' . $post->image) }}" alt="{{ $post->title }}" width="100">
-                    </div>
-                @endif
-            </div>
+                
+                <input type="file" name="image" id="image" style="display: none">
+                <label for="image">
+                        <img src="/images/posts/{{ $post->image }}" alt="" width="100" >
+                </label>
+            
 
             <input type="submit" class="btn btn-danger" value="Update Post">
         </form>
