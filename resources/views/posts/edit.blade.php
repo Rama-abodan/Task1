@@ -11,8 +11,7 @@
 
             <div>
                 <label for="title">Title:</label>
-                <input type="text" class="form-control" name="title" value="{{ $post->title }}" placeholder="post title"
-                    required>
+                <input type="text" class="form-control" name="title" value="{{ $post->title }}" placeholder="post title" required>
             </div>
 
             <div>
@@ -20,12 +19,16 @@
                 <textarea name="description" class="form-control" placeholder="post description" required>{{ $post->description }}</textarea>
             </div>
 
-                
-                <input type="file" name="image" id="image" style="display: none">
-                <label for="image">
-                        <img src="/images/posts/{{ $post->image }}" alt="" width="100" >
-                </label>
-            
+            <div>
+                <label for="images">Input Images</label>
+                <input type="file" name="images[]" id="images" multiple>
+                <div>
+                    @foreach(json_decode($post->images, true) as $key => $image)
+                        <input type="checkbox" name="existing_images[]" value="{{ $image }}" class="check" >
+                        <img src="/images/posts/{{ $image }}" alt="" style="width: 300px ;">
+                    @endforeach
+                </div>
+            </div>
 
             <input type="submit" class="btn btn-danger" value="Update Post">
         </form>

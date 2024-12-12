@@ -23,10 +23,10 @@
 
 .btn {
     width: auto;
-    margin-top: 10px;
+    height: 40px;
 }
 
-.card-body .btn {
+.card-body {
     margin-right: 5px;
 }
 
@@ -74,5 +74,15 @@ form input,form textarea {
 
 .acl {
     text-decoration: none;
-    color: inherit;
+    /* color: inherit; */
+}
+
+.cardshow{
+display: flex;
+justify-content: center;
+}
+
+.check{
+    width: 30px;
+    height: 30px;
 }

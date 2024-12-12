@@ -29,17 +29,21 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->hasFile("image")) {
-            $imageName = $request->file("image")->getClientOriginalName() . "-" . time() . $request->file("image")->getClientOriginalExtension();
-            $request->file("image")->move(public_path("/images/posts"), $imageName);
+        $images=[];
+        if($request->hasFile('images')){
+            foreach($request->file('images') as $image)
+            {
+                $imageName = $image->getClientOriginalName() . "-" . time() . $image->getClientOriginalExtension();
+                $image->move(public_path("/images/posts"), $imageName);
+                $images[]=$imageName;
+            }
+            /* dd($images); */
         }
-
         Post::create([
             "title" => $request->title,
             "description" => $request->description,
-            "image" => $imageName
+            "images" => json_encode($images),
         ]);
-
         return redirect()->route("posts.index");
     }
 
@@ -64,26 +68,22 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        /* $vali = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'image' => 'sometimes|image|max:2048'
-        ]); */
-        if ($request->hasFile('image')) {
-            $imageName = $request->file("image")->getClientOriginalName() . "-" . time() . $request->file("image")->getClientOriginalExtension();
-            $request->file("image")->move(public_path("/images/posts"), $imageName);
-            /* $vali['image'] = $imageName; */
-        }
-        else{
-            $imageName = $post->image;
-        }
-        /* $post->update($vali); */
-        $post->update([
-        "title" => $request->title,
-        "description" => $request->description,
-        "image" =>$imageName]);
-        /* return redirect()->route('posts.show', $post->id)->with('success', 'Post updated successfully'); */
-        return redirect()->route('posts.index');
+        $existingImages = $request->input('existing_images', []);
+        $newImages = [];
+        if($request->hasFile('images')){
+            foreach($request->file('images') as $image) { 
+                $imageName = $image->getClientOriginalName() . "-" . time() . "." . $image->getClientOriginalExtension();
+                $image->move(public_path("/images/posts"), $imageName);
+                $newImages[] = $imageName;
+                } 
+                } 
+        $allImages = array_merge($existingImages, $newImages);
+        $post->update([ 
+            "title" => $request->title, 
+            "description" => $request->description,
+            "images" => json_encode($allImages), 
+        ]);
+        return redirect()->route("posts.index");
     }
 
     /**

@@ -6,7 +6,7 @@
         @csrf
         <input type="text" name="title" placeholder="post title" class="form-control">
         <textarea name="description" placeholder="post description" class="form-control"></textarea>
-        <input type="file" name="image">
+        <input type="file" name="images[]" multiple>
         <input type="submit" class="btn btn-info" value="send">
     </form>
 
