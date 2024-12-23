@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-            <input type="submit" class="btn btn-danger" value="Update Post">
+            <input type="submit" class="btn btn-info" value="Update Post">
         </form>
     </div>
 @endsection
