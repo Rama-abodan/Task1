@@ -5,10 +5,10 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware("auth")->group(function (){
+
     Route::get("/" , [AuthController::class,"ShowLoginForm"])->name("login");
     Route::post("/" , [AuthController::class,"login"]);
-    });
+
     
     Route::middleware("auth")->group(function(){
     Route::get('/post',[PostController::class , "index"])->name("posts.index");
